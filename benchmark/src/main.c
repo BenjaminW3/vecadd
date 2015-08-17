@@ -34,7 +34,7 @@
 //-----------------------------------------------------------------------------
 typedef struct AxpyAlgo
 {
-    double(*pAxpy)(TIdx const, TElem const, TElem const * const, TElem * const);
+    TReturn(*pAxpy)(TIdx const, TElem const, TElem const * const, TElem * const);
     char const * pszName;
 } AxpyAlgo;
 
@@ -82,7 +82,6 @@ double measureRandomVecAdd(
     VECADD_CUDA_RT_CHECK(cudaMalloc((void **)&pXDev, bytes));
     VECADD_CUDA_RT_CHECK(cudaMemcpy(pXDev, X, bytes, cudaMemcpyHostToDevice));
     VECADD_CUDA_RT_CHECK(cudaMalloc((void **)&pYDev, bytes));
-    VECADD_CUDA_RT_CHECK(cudaMemcpy(pYDev, Y, bytes, cudaMemcpyHostToDevice));
 #endif
 
     // Initialize the measurement result.
@@ -125,18 +124,24 @@ double measureRandomVecAdd(
         vecadd_vec_print_simple(n, Y);
 #endif
 
-        //double const timeStart = getTimeSec();
+#ifndef VECADD_BENCHMARK_COMPUTATION_TIME
+        double const timeStart = getTimeSec();
+#endif
 
         // Matrix multiplication.
+#ifdef VECADD_BENCHMARK_COMPUTATION_TIME
         double const timeElapsed =
+#endif
 #ifdef VECADD_BENCHMARK_CUDA_NO_COPY
         (algo->pAxpy)(n, alpha, pXDev, pYDev);
 #else
         (algo->pAxpy)(n, alpha, X, Y);
 #endif
 
-        //double const timeEnd = getTimeSec();
-        //double const timeElapsed = timeEnd - timeStart;
+#ifndef VECADD_BENCHMARK_COMPUTATION_TIME
+        double const timeEnd = getTimeSec();
+        double const timeElapsed = timeEnd - timeStart;
+#endif
 
 #ifdef VECADD_BENCHMARK_PRINT_MATRICES
         printf("\n=\n");
@@ -355,6 +360,11 @@ void main_print_startup(
     printf("; max n:%"VECADD_PRINTF_SIZE_T, (size_t)maxN);
     printf("; step n:%"VECADD_PRINTF_SIZE_T, (size_t)stepN);
     printf("; repeat count:%"VECADD_PRINTF_SIZE_T, (size_t)repeatCount);
+#ifdef VECADD_BENCHMARK_COMPUTATION_TIME
+    printf("; VECADD_BENCHMARK_COMPUTATION_TIME=ON");
+#else
+    printf("; VECADD_BENCHMARK_COMPUTATION_TIME=OFF");
+#endif
 #ifdef VECADD_BENCHMARK_PRINT_GFLOPS
     printf("; VECADD_BENCHMARK_PRINT_GFLOPS=ON");
 #else

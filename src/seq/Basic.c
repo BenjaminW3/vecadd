@@ -28,20 +28,20 @@
     //-----------------------------------------------------------------------------
     //
     //-----------------------------------------------------------------------------
-    double vecadd_axpy_seq_basic(
+    TReturn vecadd_axpy_seq_basic(
         TIdx const n,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
         TElem * const VECADD_RESTRICT Y)
     {
-        double const timeStart = getTimeSec();
+        VECADD_TIME_START;
 
         for(TIdx i = 0; i < n; ++i)
         {
             Y[i] = alpha * X[i] + Y[i];
         }
 
-        double const timeEnd = getTimeSec();
-        return timeEnd - timeStart;
+        VECADD_TIME_END;
+        VECADD_TIME_RETURN;
     }
 #endif

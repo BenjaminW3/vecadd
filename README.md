@@ -1,4 +1,4 @@
-vecadd - vector addition wrapper library
+vecadd - Generalized Vector Addition (AXPY) wrapper library
 ===============================================================
 
 This repository contains multiple sequential and parallel AXPY implementations.

@@ -39,7 +39,7 @@
             //! \param X Vector of at least n elements.
             //! \param Y Vector of at least n elements.
             //-----------------------------------------------------------------------------
-            double vecadd_axpy_par_omp2_guided_schedule(
+            TReturn vecadd_axpy_par_omp2_guided_schedule(
                 TIdx const n,
                 TElem const alpha,
                 TElem const * const VECADD_RESTRICT X,

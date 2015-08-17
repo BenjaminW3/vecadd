@@ -52,7 +52,7 @@
         //-----------------------------------------------------------------------------
         //
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_cuda(
+        TReturn vecadd_axpy_par_cuda(
             TIdx const n,
             TElem const alpha,
             TElem const * const VECADD_RESTRICT X,
@@ -74,7 +74,7 @@
             // Restrict the max block thread extents with the grid thread extents.
             // This removes dimensions not required in the given grid thread extents.
             // This has to be done before the maxThreadsPerBlock clipping to get the maximum correctly.
-            for (TIdx i(0); i<1; ++i)
+            for(TIdx i(0); i<1; ++i)
             {
                 blockThreadExtents[i] = std::min(blockThreadExtents[i], gridThreadExtents[i]);
             }
@@ -82,11 +82,11 @@
             // Restrict it to its minimum component.
             // For example (512, 256) will get (256, 256).
             auto minBlockThreadExtent(blockThreadExtents[0]);
-            for (TIdx i(1); i<1; ++i)
+            for(TIdx i(1); i<1; ++i)
             {
                 minBlockThreadExtent = std::min(minBlockThreadExtent, blockThreadExtents[i]);
             }
-            for (TIdx i(0); i<1; ++i)
+            for(TIdx i(0); i<1; ++i)
             {
                 blockThreadExtents[i] = minBlockThreadExtent;
             }
@@ -101,7 +101,7 @@
                 // For equal block thread extent this is easily the nth root of cudaDevProp.maxThreadsPerBlock.
                 double const fNthRoot(std::pow(cudaDevProp.maxThreadsPerBlock, 1.0 / 1.0));
                 auto const nthRoot(static_cast<TIdx>(fNthRoot));
-                for (TIdx i(0); i<1; ++i)
+                for(TIdx i(0); i<1; ++i)
                 {
                     blockThreadExtents[i] = nthRoot;
                 }
@@ -109,7 +109,7 @@
 
             // Set the grid block extents (rounded to the next integer not less then the quotient.
             TIdx gridBlockExtents[] = {1};
-            for (TIdx i(0); i<1; ++i)
+            for(TIdx i(0); i<1; ++i)
             {
                 gridBlockExtents[i] =
                     static_cast<TIdx>(
@@ -120,7 +120,7 @@
             dim3 const dimBlock(blockThreadExtents[0]);
             dim3 const dimGrid(gridBlockExtents[0]);
 
-            double const timeStart = getTimeSec();
+            VECADD_TIME_START;
 
             vecadd_axpy_par_cuda_kernel<<<
                 dimGrid,
@@ -134,10 +134,10 @@
 
             VECADD_CUDA_RT_CHECK(cudaStreamSynchronize(stream));
 
-            double const timeEnd = getTimeSec();
+            VECADD_TIME_END;
 
             VECADD_CUDA_RT_CHECK(cudaStreamDestroy(stream));
 
-            return timeEnd - timeStart;
+            VECADD_TIME_RETURN;
         }
 #endif

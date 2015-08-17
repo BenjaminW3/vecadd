@@ -34,13 +34,13 @@
             //-----------------------------------------------------------------------------
             //
             //-----------------------------------------------------------------------------
-            double vecadd_axpy_par_omp2_guided_schedule(
+            TReturn vecadd_axpy_par_omp2_guided_schedule(
                 TIdx const n,
                 TElem const alpha,
                 TElem const * const VECADD_RESTRICT X,
                 TElem * const VECADD_RESTRICT Y)
             {
-                double const timeStart = getTimeSec();
+                VECADD_TIME_START;
 
                 #pragma omp parallel
                 {
@@ -65,8 +65,8 @@
                     }
                 }
 
-                double const timeEnd = getTimeSec();
-                return timeEnd - timeStart;
+                VECADD_TIME_END;
+                VECADD_TIME_RETURN;
             }
         #endif
     #endif

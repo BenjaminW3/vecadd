@@ -34,7 +34,7 @@
     //#############################################################################
     // This function only works for square blocks.
     //#############################################################################
-    class VecAddAlpakaKernel
+    class AxpyAlpakaKernel
     {
     public:
         ALPAKA_NO_HOST_ACC_WARNING
@@ -44,13 +44,13 @@
         ALPAKA_FN_ACC auto operator()(
             TAcc const & acc,
             TIdx const & n,
-            TElem const alpha,
+            TElem const & alpha,
             TElem const * const VECADD_RESTRICT X,
             TElem * const VECADD_RESTRICT Y) const
         -> void
         {
             static_assert(alpaka::dim::Dim<TAcc>::value == 1u,
-                "The accelerator used for the VecAddAlpakaKernel has to be 1 dimensional!");
+                "The accelerator used for the AxpyAlpakaKernel has to be 1 dimensional!");
 
             auto const i(alpaka::idx::getIdx<alpaka::Grid, alpaka::Threads>(acc)[0u]);
             
@@ -107,7 +107,7 @@
     template<
         typename TAcc,
         typename TKernelFnObj>
-    double vecadd_axpy_par_alpaka(
+    TReturn vecadd_axpy_par_alpaka(
         TIdx const n,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
@@ -143,7 +143,7 @@
             reinterpret_cast<TElem *>(Y)));
 
 
-        double const timeStart = getTimeSec();
+        VECADD_TIME_START;
 
         // Execute the kernel.
         alpaka::stream::enqueue(stream, exec);
@@ -151,7 +151,7 @@
         // Wait for the stream to finish the operations.
         alpaka::wait::wait(stream);
 
-        double const timeEnd = getTimeSec();
-        return timeEnd - timeStart;
+        VECADD_TIME_END;
+        VECADD_TIME_RETURN;
     }
 #endif

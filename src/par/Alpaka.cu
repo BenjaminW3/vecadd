@@ -28,16 +28,17 @@
     //-----------------------------------------------------------------------------
     //
     //-----------------------------------------------------------------------------
-    double vecadd_axpy_par_alpaka_gpu_cuda(
+    TReturn vecadd_axpy_par_alpaka_gpu_cuda(
         TIdx const n,
         TElem const alpha,
         TElem const * const X,
         TElem * const Y)
     {
-        return vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TIdx>, VecAddAlpakaKernel>(
-            n,
-            alpha,
-            X,
-            Y);
+        return
+            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                n,
+                alpha,
+                X,
+                Y);
     }
 #endif

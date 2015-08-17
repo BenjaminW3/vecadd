@@ -38,6 +38,26 @@
 typedef VECADD_INDEX_TYPE TIdx;
 
 //-----------------------------------------------------------------------------
+// Return type.
+//-----------------------------------------------------------------------------
+#ifdef VECADD_RETURN_COMPUTATION_TIME
+    #include <vecadd/common/Time.h>
+    typedef double TReturn;
+    #define VECADD_TIME_START double const vecaddTimeStart = getTimeSec()
+    #define VECADD_TIME_END double const matmulTimeEnd = getTimeSec(); double const matmulTimeDiff = matmulTimeEnd - matmulTimeStart
+    #define VECADD_TIME_STORE double const matmulTimeDiff =
+    #define VECADD_TIME_RETURN return matmulTimeDiff
+    #define VECADD_TIME_RETURN_EARLY_OUT return 0.0
+#else
+    typedef void TReturn;
+    #define VECADD_TIME_START
+    #define VECADD_TIME_END
+    #define VECADD_TIME_STORE
+    #define VECADD_TIME_RETURN
+    #define VECADD_TIME_RETURN_EARLY_OUT return;
+#endif
+
+//-----------------------------------------------------------------------------
 // Compiler Settings.
 //-----------------------------------------------------------------------------
 #if defined __INTEL_COMPILER                    // ICC additionally defines _MSC_VER if used in VS so this has to come first
@@ -92,7 +112,7 @@ typedef VECADD_INDEX_TYPE TIdx;
     #define VECADD_PRINTF_SIZE_T "zu"
 
 #else
-    #define VECADD_RESTRICT restrict
+    #define VECADD_RESTRICT
     #define VECADD_PRINTF_SIZE_T "zu"
 #endif
 

@@ -38,7 +38,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_seq_alpaka_cpu_b_seq_t_seq(
+        TReturn vecadd_axpy_seq_alpaka_cpu_b_seq_t_seq(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -53,7 +53,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_alpaka_cpu_b_omp2_t_seq(
+        TReturn vecadd_axpy_par_alpaka_cpu_b_omp2_t_seq(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -68,7 +68,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_alpaka_cpu_b_seq_t_omp2(
+        TReturn vecadd_axpy_par_alpaka_cpu_b_seq_t_omp2(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -83,7 +83,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_alpaka_cpu_bt_omp4(
+        TReturn vecadd_axpy_par_alpaka_cpu_bt_omp4(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -98,7 +98,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_alpaka_cpu_b_seq_t_threads(
+        TReturn vecadd_axpy_par_alpaka_cpu_b_seq_t_threads(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -113,7 +113,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_seq_alpaka_cpu_b_seq_t_fibers(
+        TReturn vecadd_axpy_seq_alpaka_cpu_b_seq_t_fibers(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
@@ -128,7 +128,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_alpaka_gpu_cuda(
+        TReturn vecadd_axpy_par_alpaka_gpu_cuda(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,

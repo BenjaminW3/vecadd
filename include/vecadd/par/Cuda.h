@@ -37,7 +37,7 @@
         //! \param X Vector of at least n elements.
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
-        double vecadd_axpy_par_cuda(
+        TReturn vecadd_axpy_par_cuda(
             TIdx const n,
             TElem const alpha,
             TElem const * const X,
