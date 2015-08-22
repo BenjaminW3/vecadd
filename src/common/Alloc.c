@@ -33,7 +33,7 @@
 //
 //-----------------------------------------------------------------------------
 void * vecadd_arr_aligned_alloc_internal(
-    TIdx const numBytes)
+    TSize const numBytes)
 {
 #if defined VECADD_ALIGNED_MALLOC
     // If c11 were supported we could use void *aligned_alloc(size_t alignment, size_t size);
@@ -55,9 +55,9 @@ void * vecadd_arr_aligned_alloc_internal(
 //
 //-----------------------------------------------------------------------------
 TElem * vecadd_arr_alloc(
-    TIdx const numElements)
+    TSize const numElements)
 {
-    TIdx const numBytes = numElements * sizeof(TElem);
+    TSize const numBytes = numElements * sizeof(TElem);
 
     return (TElem*) vecadd_arr_aligned_alloc_internal(numBytes);
 }

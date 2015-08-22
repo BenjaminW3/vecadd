@@ -29,13 +29,13 @@
     //
     //-----------------------------------------------------------------------------
     TReturn vecadd_axpy_par_alpaka_gpu_cuda(
-        TIdx const n,
+        TSize const n,
         TElem const alpha,
         TElem const * const X,
         TElem * const Y)
     {
         return
-            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                 n,
                 alpha,
                 X,

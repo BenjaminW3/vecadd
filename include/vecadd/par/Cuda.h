@@ -23,7 +23,7 @@
 
 #if defined(VECADD_BUILD_PAR_CUDA)
 
-    #include <vecadd/common/Config.h>   // TElem, TIdx
+    #include <vecadd/common/Config.h>   // TElem, TSize
 
     #ifdef __cplusplus
         extern "C"
@@ -38,7 +38,7 @@
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_cuda(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y);

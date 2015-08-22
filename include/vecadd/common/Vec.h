@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include <vecadd/common/Config.h>   // TElem, TIdx
+#include <vecadd/common/Config.h>   // TElem, TSize
 
 #include <stdbool.h>                // bool
 
@@ -38,7 +38,7 @@
     //! \return If the matrices compare equal (under the given threshold).
     //-----------------------------------------------------------------------------
     bool vecadd_vec_cmp(
-        TIdx const n,
+        TSize const n,
         TElem const * const VECADD_RESTRICT A,
         TElem const * const VECADD_RESTRICT B,
         TElem const errorThreshold);
@@ -50,7 +50,7 @@
     //! \param A The vector to print.
     //-----------------------------------------------------------------------------
     void vecadd_vec_print(
-        TIdx const n,
+        TSize const n,
         TElem const * const VECADD_RESTRICT A,
         char * const elemSeperator,
         char * const dimBegin, char * const dimEnd);
@@ -61,7 +61,7 @@
     //! \param A The vector to print.
     //-----------------------------------------------------------------------------
     void vecadd_vec_print_simple(
-        TIdx const n,
+        TSize const n,
         TElem const * const VECADD_RESTRICT A);
     //-----------------------------------------------------------------------------
     //! Prints the vector to the console.
@@ -70,7 +70,7 @@
     //! \param A The vector to print.
     //-----------------------------------------------------------------------------
     void vecadd_vec_print_mathematica(
-        TIdx const n,
+        TSize const n,
         TElem const * const VECADD_RESTRICT A);
     //-----------------------------------------------------------------------------
     //! Copy the vector pSrcVec to the pDstVec.
@@ -80,7 +80,7 @@
     //! \param pDstVec Row major destination vector.
     //-----------------------------------------------------------------------------
     void matmul_vec_copy(
-        TIdx const n,
+        TSize const n,
         TElem const * const VECADD_RESTRICT pSrcVec,
         TElem * const VECADD_RESTRICT pDstVec);
 #ifdef __cplusplus

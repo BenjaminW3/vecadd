@@ -30,13 +30,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_seq_alpaka_cpu_b_seq_t_seq(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuSerial<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuSerial<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,
@@ -48,13 +48,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_cpu_b_omp2_t_seq(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Blocks<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Blocks<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,
@@ -66,13 +66,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_cpu_b_seq_t_omp2(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Threads<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Threads<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,
@@ -84,13 +84,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_cpu_bt_omp4(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp4<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp4<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,
@@ -102,13 +102,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_cpu_b_seq_t_threads(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuThreads<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuThreads<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,
@@ -120,13 +120,13 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_seq_alpaka_cpu_b_seq_t_fibers(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const X,
             TElem * const Y)
         {
             return
-                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuFibers<alpaka::dim::DimInt<1u>, TIdx>, AxpyAlpakaKernel>(
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuFibers<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
                     alpha,
                     X,

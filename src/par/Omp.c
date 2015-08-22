@@ -35,7 +35,7 @@
             //
             //-----------------------------------------------------------------------------
             TReturn vecadd_axpy_par_omp2_guided_schedule(
-                TIdx const n,
+                TSize const n,
                 TElem const alpha,
                 TElem const * const VECADD_RESTRICT X,
                 TElem * const VECADD_RESTRICT Y)
@@ -58,7 +58,7 @@
                     for(i = 0; i < iN; ++i)
             #else
                     #pragma omp for schedule(guided)
-                    for(TIdx i = 0; i < n; ++i)
+                    for(TSize i = 0; i < n; ++i)
             #endif
                     {
                         Y[i] = alpha * X[i] + Y[i];

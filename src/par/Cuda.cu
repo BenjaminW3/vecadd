@@ -37,12 +37,12 @@
         // This function only works for square blocks.
         //-----------------------------------------------------------------------------
         __global__ void vecadd_axpy_par_cuda_kernel(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const VECADD_RESTRICT X,
             TElem * const VECADD_RESTRICT Y)
         {
-            TIdx const i(blockIdx.x*blockDim.x + threadIdx.x);
+            TSize const i(blockIdx.x*blockDim.x + threadIdx.x);
 
             if(i < n)
             {
@@ -53,7 +53,7 @@
         //
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_cuda(
-            TIdx const n,
+            TSize const n,
             TElem const alpha,
             TElem const * const VECADD_RESTRICT X,
             TElem * const VECADD_RESTRICT Y)
@@ -68,13 +68,13 @@
                 &cudaDevProp,
                 0));
 
-            TIdx gridThreadExtents[] = {n};
-            TIdx blockThreadExtents[] = {cudaDevProp.maxThreadsDim[0]};
+            TSize gridThreadExtents[] = {n};
+            TSize blockThreadExtents[] = {cudaDevProp.maxThreadsDim[0]};
 
             // Restrict the max block thread extents with the grid thread extents.
             // This removes dimensions not required in the given grid thread extents.
             // This has to be done before the maxThreadsPerBlock clipping to get the maximum correctly.
-            for(TIdx i(0); i<1; ++i)
+            for(TSize i(0); i<1; ++i)
             {
                 blockThreadExtents[i] = std::min(blockThreadExtents[i], gridThreadExtents[i]);
             }
@@ -82,11 +82,11 @@
             // Restrict it to its minimum component.
             // For example (512, 256) will get (256, 256).
             auto minBlockThreadExtent(blockThreadExtents[0]);
-            for(TIdx i(1); i<1; ++i)
+            for(TSize i(1); i<1; ++i)
             {
                 minBlockThreadExtent = std::min(minBlockThreadExtent, blockThreadExtents[i]);
             }
-            for(TIdx i(0); i<1; ++i)
+            for(TSize i(0); i<1; ++i)
             {
                 blockThreadExtents[i] = minBlockThreadExtent;
             }
@@ -100,19 +100,19 @@
 
                 // For equal block thread extent this is easily the nth root of cudaDevProp.maxThreadsPerBlock.
                 double const fNthRoot(std::pow(cudaDevProp.maxThreadsPerBlock, 1.0 / 1.0));
-                auto const nthRoot(static_cast<TIdx>(fNthRoot));
-                for(TIdx i(0); i<1; ++i)
+                auto const nthRoot(static_cast<TSize>(fNthRoot));
+                for(TSize i(0); i<1; ++i)
                 {
                     blockThreadExtents[i] = nthRoot;
                 }
             }
 
             // Set the grid block extents (rounded to the next integer not less then the quotient.
-            TIdx gridBlockExtents[] = {1};
-            for(TIdx i(0); i<1; ++i)
+            TSize gridBlockExtents[] = {1};
+            for(TSize i(0); i<1; ++i)
             {
                 gridBlockExtents[i] =
-                    static_cast<TIdx>(
+                    static_cast<TSize>(
                         std::ceil(static_cast<double>(gridThreadExtents[i])
                             / static_cast<double>(blockThreadExtents[i])));
             }

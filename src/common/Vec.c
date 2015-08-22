@@ -32,19 +32,19 @@
 //
 //-----------------------------------------------------------------------------
 bool vecadd_vec_cmp(
-    TIdx const n,
+    TSize const n,
     TElem const * const VECADD_RESTRICT A,
     TElem const * const VECADD_RESTRICT B,
     TElem const errorThreshold)
 {
     // The maximum number of error values being printed.
-    static TIdx const maxErrorsPrint = 100;
+    static TSize const maxErrorsPrint = 100;
 
-    TIdx errorCount = 0;
+    TSize errorCount = 0;
 
     // Loop through all values, print out errors and get the maximum error.
     TElem maxError = (TElem)0.0;
-    for(TIdx i = 0; i < n; ++i)
+    for(TSize i = 0; i < n; ++i)
     {
         TElem const error = (TElem)fabs(A[i] - B[i]);
         if(error > errorThreshold)
@@ -81,13 +81,13 @@ bool vecadd_vec_cmp(
 //
 //-----------------------------------------------------------------------------
 void vecadd_vec_print(
-    TIdx const n,
+    TSize const n,
     TElem const * const VECADD_RESTRICT A,
     char * const elemSeperator,
     char * const dimBegin, char * const dimEnd)
 {
     printf("%s", dimBegin);
-    for(TIdx i = 0; i < n; ++i)
+    for(TSize i = 0; i < n; ++i)
     {
         if(i>0)
         {
@@ -101,7 +101,7 @@ void vecadd_vec_print(
 //
 //-----------------------------------------------------------------------------
 void vecadd_vec_print_simple(
-    TIdx const n,
+    TSize const n,
     TElem const * const VECADD_RESTRICT A)
 {
     vecadd_vec_print(
@@ -114,7 +114,7 @@ void vecadd_vec_print_simple(
 //
 //-----------------------------------------------------------------------------
 void vecadd_vec_print_mathematica(
-    TIdx const n,
+    TSize const n,
     TElem const * const VECADD_RESTRICT A)
 {
     vecadd_vec_print(
@@ -127,7 +127,7 @@ void vecadd_vec_print_mathematica(
 //
 //-----------------------------------------------------------------------------
 void matmul_vec_copy(
-    TIdx const n,
+    TSize const n,
     TElem const * const VECADD_RESTRICT pSrcVec,
     TElem * const VECADD_RESTRICT pDstVec)
 {

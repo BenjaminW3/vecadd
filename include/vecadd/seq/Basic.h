@@ -23,7 +23,7 @@
 
 #ifdef VECADD_BUILD_SEQ_BASIC
 
-    #include <vecadd/common/Config.h>   // TElem, TIdx
+    #include <vecadd/common/Config.h>   // TElem, TSize
 
     #ifdef __cplusplus
         extern "C"
@@ -38,7 +38,7 @@
     //! \param Y Vector of at least n elements.
     //-----------------------------------------------------------------------------
     TReturn vecadd_axpy_seq_basic(
-        TIdx const n,
+        TSize const n,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
         TElem * const VECADD_RESTRICT Y);

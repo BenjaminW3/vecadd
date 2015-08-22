@@ -34,7 +34,7 @@
 //-----------------------------------------------------------------------------
 typedef struct AxpyAlgo
 {
-    TReturn(*pAxpy)(TIdx const, TElem const, TElem const * const, TElem * const);
+    TReturn(*pAxpy)(TSize const, TElem const, TElem const * const, TElem * const);
     char const * pszName;
 } AxpyAlgo;
 
@@ -50,8 +50,8 @@ typedef struct AxpyAlgo
 //-----------------------------------------------------------------------------
 double measureRandomVecAdd(
     AxpyAlgo const * const algo,
-    TIdx const n,
-    TIdx const repeatCount,
+    TSize const n,
+    TSize const repeatCount,
     bool const bRepeatTakeMinimum
  #ifdef VECADD_BENCHMARK_VERIFY_RESULT
     ,bool * pResultsCorrect
@@ -65,7 +65,7 @@ double measureRandomVecAdd(
     TElem const alpha = vecadd_gen_rand_val(minVal, maxVal);
 
     // Allocate and initialize the matrices of the given size.
-    TIdx const elemCount = n;
+    TSize const elemCount = n;
 
     TElem const * const X = vecadd_arr_alloc_fill_rand(elemCount, minVal, maxVal);
     TElem * const Y = vecadd_arr_alloc(elemCount);
@@ -92,7 +92,7 @@ double measureRandomVecAdd(
     }
 
     // Iterate.
-    for(TIdx i = 0; i < repeatCount; ++i)
+    for(TSize i = 0; i < repeatCount; ++i)
     {
         // We have to initialize the Y array with data before using it because else we would measure page table time on first write.
         vecadd_arr_fill_rand(Y, elemCount, minVal, maxVal);
@@ -214,8 +214,8 @@ double measureRandomVecAdd(
 //-----------------------------------------------------------------------------
 typedef struct AxpySizes
 {
-    TIdx sizeCount;
-    TIdx * pSizes;
+    TSize sizeCount;
+    TSize * pSizes;
 } AxpySizes;
 
 //-----------------------------------------------------------------------------
@@ -225,23 +225,23 @@ typedef struct AxpySizes
 //! \param maxN The maximum vector dimension.
 //-----------------------------------------------------------------------------
 AxpySizes buildSizes(
-    TIdx const minN,
-    TIdx const maxN,
-    TIdx const stepN)
+    TSize const minN,
+    TSize const maxN,
+    TSize const stepN)
 {
     AxpySizes sizes;
     sizes.sizeCount = 0;
     sizes.pSizes = 0;
 
-    TIdx n;
+    TSize n;
     for(n = minN; n <= maxN; n += (stepN == 0) ? n : stepN)
     {
         ++sizes.sizeCount;
     }
 
-    sizes.pSizes = (TIdx *)malloc(sizes.sizeCount * sizeof(TIdx));
+    sizes.pSizes = (TSize *)malloc(sizes.sizeCount * sizeof(TSize));
 
-    TIdx idx = 0;
+    TSize idx = 0;
     for(n = minN; n <= maxN; n += (stepN == 0) ? n : stepN)
     {
         sizes.pSizes[idx] = n;
@@ -265,9 +265,9 @@ AxpySizes buildSizes(
 #endif
 measureRandomVecAdds(
     AxpyAlgo const * const pAlgos,
-    TIdx const algoCount,
+    TSize const algoCount,
     AxpySizes const * const pSizes,
-    TIdx const repeatCount)
+    TSize const repeatCount)
 {
 #ifndef VECADD_BENCHMARK_PRINT_GFLOPS
     printf("\n#time in s");
@@ -276,7 +276,7 @@ measureRandomVecAdds(
 #endif
     printf("\nn");
     // Table heading
-    for(TIdx algoIdx = 0; algoIdx < algoCount; ++algoIdx)
+    for(TSize algoIdx = 0; algoIdx < algoCount; ++algoIdx)
     {
             printf(" \t%s", pAlgos[algoIdx].pszName);
     }
@@ -287,14 +287,14 @@ measureRandomVecAdds(
 #endif
     if(pSizes)
     {
-        for(TIdx sizeIdx = 0; sizeIdx < pSizes->sizeCount; ++sizeIdx)
+        for(TSize sizeIdx = 0; sizeIdx < pSizes->sizeCount; ++sizeIdx)
         {
-            TIdx const n = pSizes->pSizes[sizeIdx];
+            TSize const n = pSizes->pSizes[sizeIdx];
 
             // Print the operation
             printf("\n%"VECADD_PRINTF_SIZE_T, (size_t)n);
 
-            for(TIdx algoIdx = 0; algoIdx < algoCount; ++algoIdx)
+            for(TSize algoIdx = 0; algoIdx < algoCount; ++algoIdx)
             {
 #ifdef VECADD_BENCHMARK_VERIFY_RESULT
                 bool resultsCorrectAlgo = true;
@@ -337,10 +337,10 @@ measureRandomVecAdds(
 //! Prints some startup informations.
 //-----------------------------------------------------------------------------
 void main_print_startup(
-    TIdx minN,
-    TIdx maxN,
-    TIdx stepN,
-    TIdx repeatCount)
+    TSize minN,
+    TSize maxN,
+    TSize stepN,
+    TSize repeatCount)
 {
     printf("# vecadd benchmark copyright (c) 2015, Benjamin Worpitz");
     printf(" | Config:");
@@ -400,10 +400,10 @@ int main(
     // Set the initial seed to make the measurements repeatable.
     srand(42u);
 
-    TIdx minN = 1;
-    TIdx maxN = 1;
-    TIdx stepN = 1;
-    TIdx repeatCount = 1;
+    TSize minN = 1;
+    TSize maxN = 1;
+    TSize stepN = 1;
+    TSize repeatCount = 1;
 
     // Read all arguments.
     if(argc != (4+1))

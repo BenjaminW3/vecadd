@@ -43,7 +43,7 @@
             typename TElem>
         ALPAKA_FN_ACC auto operator()(
             TAcc const & acc,
-            TIdx const & n,
+            TSize const & n,
             TElem const & alpha,
             TElem const * const VECADD_RESTRICT X,
             TElem * const VECADD_RESTRICT Y) const
@@ -108,7 +108,7 @@
         typename TAcc,
         typename TKernelFnObj>
     TReturn vecadd_axpy_par_alpaka(
-        TIdx const n,
+        TSize const n,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
         TElem * const VECADD_RESTRICT Y)
@@ -121,7 +121,7 @@
         Stream<alpaka::dev::Dev<TAcc>> stream(devAcc);
 
         // Let alpaka calculate good block and grid sizes given our full problem extents.
-        alpaka::workdiv::WorkDivMembers<alpaka::dim::DimInt<1u>, TIdx> const workDiv(
+        alpaka::workdiv::WorkDivMembers<alpaka::dim::DimInt<1u>, TSize> const workDiv(
             alpaka::workdiv::getValidWorkDiv<TAcc>(
                 devAcc,
                 n,

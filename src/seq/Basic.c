@@ -29,14 +29,14 @@
     //
     //-----------------------------------------------------------------------------
     TReturn vecadd_axpy_seq_basic(
-        TIdx const n,
+        TSize const n,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
         TElem * const VECADD_RESTRICT Y)
     {
         VECADD_TIME_START;
 
-        for(TIdx i = 0; i < n; ++i)
+        for(TSize i = 0; i < n; ++i)
         {
             Y[i] = alpha * X[i] + Y[i];
         }

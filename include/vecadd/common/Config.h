@@ -35,7 +35,7 @@
 #include <stddef.h>                 // size_t
 #include <stdint.h>                 // int32_t
 
-typedef VECADD_INDEX_TYPE TIdx;
+typedef VECADD_INDEX_TYPE TSize;
 
 //-----------------------------------------------------------------------------
 // Return type.

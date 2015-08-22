@@ -43,12 +43,12 @@ TElem vecadd_gen_rand_val(
 //-----------------------------------------------------------------------------
 void vecadd_arr_fill_val(
     TElem * const pArray,
-    TIdx const numElements,
+    TSize const numElements,
     TElem const val)
 {
     assert(pArray);
 
-    for(TIdx i = 0; i<numElements; ++i)
+    for(TSize i = 0; i<numElements; ++i)
     {
         pArray[i] = val;
     }
@@ -58,7 +58,7 @@ void vecadd_arr_fill_val(
 //-----------------------------------------------------------------------------
 void vecadd_arr_fill_zero(
     TElem * const pArray,
-    TIdx const numElements)
+    TSize const numElements)
 {
     vecadd_arr_fill_val(
         pArray,
@@ -70,11 +70,11 @@ void vecadd_arr_fill_zero(
 //-----------------------------------------------------------------------------
 void vecadd_arr_fill_idx(
     TElem * const pArray,
-    TIdx const numElements)
+    TSize const numElements)
 {
     assert(pArray);
 
-    for(TIdx i = 0; i<numElements; ++i)
+    for(TSize i = 0; i<numElements; ++i)
     {
         pArray[i] = (TElem)i;
     }
@@ -84,13 +84,13 @@ void vecadd_arr_fill_idx(
 //-----------------------------------------------------------------------------
 void vecadd_arr_fill_rand(
     TElem * const pArray,
-    TIdx const numElements,
+    TSize const numElements,
     TElem const min,
     TElem const max)
 {
     assert(pArray);
 
-    for(TIdx i = 0; i<numElements; ++i)
+    for(TSize i = 0; i<numElements; ++i)
     {
         pArray[i] = vecadd_gen_rand_val(min, max);
     }
@@ -100,7 +100,7 @@ void vecadd_arr_fill_rand(
 //
 //-----------------------------------------------------------------------------
 TElem * vecadd_arr_alloc_fill_val(
-    TIdx const numElements,
+    TSize const numElements,
     TElem const val)
 {
     TElem * arr = vecadd_arr_alloc(numElements);
@@ -113,7 +113,7 @@ TElem * vecadd_arr_alloc_fill_val(
 //
 //-----------------------------------------------------------------------------
 TElem * vecadd_arr_alloc_fill_zero(
-    TIdx const numElements)
+    TSize const numElements)
 {
     TElem * arr = vecadd_arr_alloc(numElements);
 
@@ -125,7 +125,7 @@ TElem * vecadd_arr_alloc_fill_zero(
 //
 //-----------------------------------------------------------------------------
 TElem * vecadd_arr_alloc_fill_idx(
-    TIdx const numElements)
+    TSize const numElements)
 {
     TElem * arr = vecadd_arr_alloc(numElements);
 
@@ -137,7 +137,7 @@ TElem * vecadd_arr_alloc_fill_idx(
 //
 //-----------------------------------------------------------------------------
 TElem * vecadd_arr_alloc_fill_rand(
-    TIdx const numElements,
+    TSize const numElements,
     TElem const min,
     TElem const max)
 {
