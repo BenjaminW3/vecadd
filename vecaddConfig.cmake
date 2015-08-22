@@ -96,7 +96,7 @@ ENDIF()
 
 OPTION(VECADD_RETURN_COMPUTATION_TIME "If this is defined, the functions return the time needed for the computation itself omitting initialization and shutdown (if possible)." ON)
 IF(VECADD_RETURN_COMPUTATION_TIME)
-    LIST(APPEND _MATMUL_COMPILE_DEFINITIONS_PUBLIC "VECADD_RETURN_COMPUTATION_TIME")
+    LIST(APPEND _VECADD_COMPILE_DEFINITIONS_PUBLIC "VECADD_RETURN_COMPUTATION_TIME")
 ENDIF()
 
 #-------------------------------------------------------------------------------

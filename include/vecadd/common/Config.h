@@ -44,9 +44,9 @@ typedef VECADD_INDEX_TYPE TIdx;
     #include <vecadd/common/Time.h>
     typedef double TReturn;
     #define VECADD_TIME_START double const vecaddTimeStart = getTimeSec()
-    #define VECADD_TIME_END double const matmulTimeEnd = getTimeSec(); double const matmulTimeDiff = matmulTimeEnd - matmulTimeStart
-    #define VECADD_TIME_STORE double const matmulTimeDiff =
-    #define VECADD_TIME_RETURN return matmulTimeDiff
+    #define VECADD_TIME_END double const vecaddTimeEnd = getTimeSec(); double const vecaddTimeDiff = vecaddTimeEnd - vecaddTimeStart
+    #define VECADD_TIME_STORE double const vecaddTimeDiff =
+    #define VECADD_TIME_RETURN return vecaddTimeDiff
     #define VECADD_TIME_RETURN_EARLY_OUT return 0.0
 #else
     typedef void TReturn;
