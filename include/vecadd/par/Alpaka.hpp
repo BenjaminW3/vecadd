@@ -78,11 +78,11 @@
         struct StreamType<
             alpaka::dev::DevCpu>
         {
-#if (VECADD_DEBUG >= VECADD_DEBUG_FULL)
+//#if (VECADD_DEBUG >= VECADD_DEBUG_FULL)
             using type = alpaka::stream::StreamCpuSync;
-#else
+/*#else
             using type = alpaka::stream::StreamCpuAsync;
-#endif
+#endif*/
         };
 
 #if defined(ALPAKA_ACC_GPU_CUDA_ENABLED) && defined(__CUDACC__)
