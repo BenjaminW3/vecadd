@@ -37,6 +37,9 @@
     class AxpyAlpakaKernel
     {
     public:
+        //-----------------------------------------------------------------------------
+        //
+        //-----------------------------------------------------------------------------
         ALPAKA_NO_HOST_ACC_WARNING
         template<
             typename TAcc,
@@ -129,11 +132,12 @@
 
         // Let alpaka calculate good block and grid sizes given our full problem extents.
         alpaka::workdiv::WorkDivMembers<alpaka::dim::DimInt<1u>, TSize> const workDiv(
-            alpaka::workdiv::getValidWorkDiv<TAcc>(
-                devAcc,
-                n,
-                false,
-                alpaka::workdiv::GridBlockExtentsSubDivRestrictions::EqualExtents));
+            alpaka::workdiv::getValidWorkDiv<
+                TAcc>(
+                    devAcc,
+                    n,
+                    false,
+                    alpaka::workdiv::GridBlockExtentsSubDivRestrictions::EqualExtents));
 
         // Create an instance of the kernel functor.
         TKernelFnObj kernel;

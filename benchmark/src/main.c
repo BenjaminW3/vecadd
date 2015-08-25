@@ -453,9 +453,9 @@ int main(
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_CPU_B_SEQ_T_SEQ
         {vecadd_axpy_seq_alpaka_cpu_b_seq_t_seq, "axpy_seq_alpaka_cpu_b_seq_t_seq"},
     #endif
-    #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_GPU_CUDA_MEMCPY
+    /*#ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_GPU_CUDA_MEMCPY
         {vecadd_axpy_par_alpaka_gpu_cuda_memcpy, "axpy_par_alpaka_gpu_cuda_memcpy"},
-    #endif
+    #endif*/
 
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_GPU_CUDA
         {vecadd_axpy_par_alpaka_gpu_cuda, "axpy_par_alpaka_gpu_cuda"},
