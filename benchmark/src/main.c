@@ -437,6 +437,7 @@ int main(
     #endif
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_CPU_B_OMP2_T_SEQ
         {vecadd_axpy_par_alpaka_cpu_b_omp2_t_seq, "axpy_par_alpaka_cpu_b_omp2_t_seq"},
+        {vecadd_axpy_par_vec_alpaka_cpu_b_omp2_t_seq, "axpy_par_vec_alpaka_cpu_b_omp2_t_seq"},
     #endif
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_CPU_B_SEQ_T_OMP2
         {vecadd_axpy_par_alpaka_cpu_b_seq_t_omp2, "axpy_par_alpaka_cpu_b_seq_t_omp2"},
@@ -452,6 +453,7 @@ int main(
     #endif
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_CPU_B_SEQ_T_SEQ
         {vecadd_axpy_seq_alpaka_cpu_b_seq_t_seq, "axpy_seq_alpaka_cpu_b_seq_t_seq"},
+        {vecadd_axpy_seq_vec_alpaka_cpu_b_seq_t_seq, "axpy_seq_vec_alpaka_cpu_b_seq_t_seq"},
     #endif
     /*#ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_GPU_CUDA_MEMCPY
         {vecadd_axpy_par_alpaka_gpu_cuda_memcpy, "axpy_par_alpaka_gpu_cuda_memcpy"},
@@ -459,6 +461,9 @@ int main(
 
     #ifdef VECADD_BENCHMARK_PAR_ALPAKA_ACC_GPU_CUDA
         {vecadd_axpy_par_alpaka_gpu_cuda, "axpy_par_alpaka_gpu_cuda"},
+        {vecadd_axpy_par_vec2_alpaka_gpu_cuda, "axpy_par_vec2_alpaka_gpu_cuda"},
+        {vecadd_axpy_par_vec4_alpaka_gpu_cuda, "axpy_par_vec4_alpaka_gpu_cuda"},
+        {vecadd_axpy_par_vec8_alpaka_gpu_cuda, "axpy_par_vec8_alpaka_gpu_cuda"},
     #endif
     #ifdef VECADD_BENCHMARK_PAR_CUDA
         {vecadd_axpy_par_cuda, "axpy_par_cuda"},

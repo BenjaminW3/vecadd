@@ -43,6 +43,19 @@
             TElem const alpha,
             TElem const * const X,
             TElem * const Y);
+        //-----------------------------------------------------------------------------
+        //! (S/D) vector addition Y = A + X using alpaka`s serial vectorized accelerator back-end.
+        //!
+        //! \param n Specifies the number of elements of the vectors X and Y.
+        //! \param alpha Scalar the X vector is multiplied with.
+        //! \param X Vector of at least n elements.
+        //! \param Y Vector of at least n elements.
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_seq_vec_alpaka_cpu_b_seq_t_seq(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y);
     #endif
     #ifdef VECADD_BUILD_PAR_ALPAKA_ACC_CPU_B_OMP2_T_SEQ
         //-----------------------------------------------------------------------------
@@ -54,6 +67,19 @@
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_cpu_b_omp2_t_seq(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y);
+        //-----------------------------------------------------------------------------
+        //! (S/D) vector addition Y = A + X using alpaka`s OpenMP 2.0 block accelerator back-end.
+        //!
+        //! \param n Specifies the number of elements of the vectors X and Y.
+        //! \param alpha Scalar the X vector is multiplied with.
+        //! \param X Vector of at least n elements.
+        //! \param Y Vector of at least n elements.
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_par_vec_alpaka_cpu_b_omp2_t_seq(
             TSize const n,
             TElem const alpha,
             TElem const * const X,
@@ -129,6 +155,45 @@
         //! \param Y Vector of at least n elements.
         //-----------------------------------------------------------------------------
         TReturn vecadd_axpy_par_alpaka_gpu_cuda(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y);
+        //-----------------------------------------------------------------------------
+        //! (S/D) vector addition Y = A + X using alpaka`s CUDA back-end.
+        //!
+        //! \param n Specifies the number of elements of the vectors X and Y.
+        //! \param alpha Scalar the X vector is multiplied with.
+        //! \param X Vector of at least n elements.
+        //! \param Y Vector of at least n elements.
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_par_vec2_alpaka_gpu_cuda(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y);
+        //-----------------------------------------------------------------------------
+        //! (S/D) vector addition Y = A + X using alpaka`s CUDA back-end.
+        //!
+        //! \param n Specifies the number of elements of the vectors X and Y.
+        //! \param alpha Scalar the X vector is multiplied with.
+        //! \param X Vector of at least n elements.
+        //! \param Y Vector of at least n elements.
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_par_vec4_alpaka_gpu_cuda(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y);
+        //-----------------------------------------------------------------------------
+        //! (S/D) vector addition Y = A + X using alpaka`s CUDA back-end.
+        //!
+        //! \param n Specifies the number of elements of the vectors X and Y.
+        //! \param alpha Scalar the X vector is multiplied with.
+        //! \param X Vector of at least n elements.
+        //! \param Y Vector of at least n elements.
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_par_vec8_alpaka_gpu_cuda(
             TSize const n,
             TElem const alpha,
             TElem const * const X,

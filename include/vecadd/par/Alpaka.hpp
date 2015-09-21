@@ -32,7 +32,7 @@
     #include <type_traits>          // std::is_same
 
     //#############################################################################
-    // This function only works for square blocks.
+    //
     //#############################################################################
     class AxpyAlpakaKernel
     {
@@ -56,10 +56,52 @@
                 "The accelerator used for the AxpyAlpakaKernel has to be 1 dimensional!");
 
             auto const i(alpaka::idx::getIdx<alpaka::Grid, alpaka::Threads>(acc)[0u]);
-            
+
             if(i < n)
             {
                 Y[i] = alpha * X[i] + Y[i];
+            }
+        }
+    };
+
+    //#############################################################################
+    //
+    //#############################################################################
+    class AxpyVectorizedAlpakaKernel
+    {
+    public:
+        //-----------------------------------------------------------------------------
+        //
+        //-----------------------------------------------------------------------------
+        ALPAKA_NO_HOST_ACC_WARNING
+        template<
+            typename TAcc,
+            typename TElem>
+        ALPAKA_FN_ACC auto operator()(
+            TAcc const & acc,
+            TSize const & n,
+            TElem const & alpha,
+            TElem const * const VECADD_RESTRICT X,
+            TElem * const VECADD_RESTRICT Y) const
+        -> void
+        {
+            static_assert(alpaka::dim::Dim<TAcc>::value == 1u,
+                "The accelerator used for the AxpyAlpakaKernel has to be 1 dimensional!");
+
+            auto const gridThreadIdx(alpaka::idx::getIdx<alpaka::Grid, alpaka::Threads>(acc)[0u]);
+            auto const threadElemExtent(alpaka::workdiv::getWorkDiv<alpaka::Thread, alpaka::Elems>(acc)[0u]);
+            auto const threadFirstElemIdx(gridThreadIdx * threadElemExtent);
+
+            if(threadFirstElemIdx < n)
+            {
+                // Calculate the number of elements to compute in this thread.
+                // The result is uniform for all but the last thread.
+                auto const elems(threadElemExtent + alpaka::math::min(acc, 0, n-(threadFirstElemIdx+threadElemExtent)));
+
+                for(TSize i(threadFirstElemIdx); i<(threadFirstElemIdx+elems); ++i)
+                {
+                    Y[i] = alpha * X[i] + Y[i];
+                }
             }
         }
     };
@@ -119,6 +161,7 @@
         typename TKernelFnObj>
     TReturn vecadd_axpy_par_alpaka(
         TSize const n,
+        TSize const threadElemExtent,
         TElem const alpha,
         TElem const * const VECADD_RESTRICT X,
         TElem * const VECADD_RESTRICT Y)
@@ -130,14 +173,15 @@
         // Get a stream on this device.
         Stream<alpaka::dev::Dev<TAcc>> stream(devAcc);
 
-        // Let alpaka calculate good block and grid sizes given our full problem extents.
+        // Let alpaka calculate good block and grid sizes given our full problem extent.
         alpaka::workdiv::WorkDivMembers<alpaka::dim::DimInt<1u>, TSize> const workDiv(
             alpaka::workdiv::getValidWorkDiv<
                 TAcc>(
                     devAcc,
                     n,
+                    threadElemExtent,
                     false,
-                    alpaka::workdiv::GridBlockExtentsSubDivRestrictions::EqualExtents));
+                    alpaka::workdiv::GridBlockExtentSubDivRestrictions::EqualExtent));
 
         // Create an instance of the kernel functor.
         TKernelFnObj kernel;
@@ -145,14 +189,14 @@
         // Create the executor.
         // NOTE: We remove the __restrict__ because alpaka calls std::ref on the arguments and std::ref errors.
         // This is most probably undefined. MSVC compiles it without any warning.
-        auto const exec(alpaka::exec::create<TAcc>(
-            workDiv,
-            kernel,
-            n,
-            alpha,
-            reinterpret_cast<TElem const *>(X),
-            reinterpret_cast<TElem *>(Y)));
-
+        auto const exec(
+            alpaka::exec::create<TAcc>(
+                workDiv,
+                kernel,
+                n,
+                alpha,
+                reinterpret_cast<TElem const *>(X),
+                reinterpret_cast<TElem *>(Y)));
 
         VECADD_TIME_START;
 

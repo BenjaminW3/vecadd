@@ -37,6 +37,58 @@
         return
             vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                 n,
+                1u,
+                alpha,
+                X,
+                Y);
+    }
+    //-----------------------------------------------------------------------------
+    //
+    //-----------------------------------------------------------------------------
+    TReturn vecadd_axpy_par_vec2_alpaka_gpu_cuda(
+        TSize const n,
+        TElem const alpha,
+        TElem const * const X,
+        TElem * const Y)
+    {
+        return
+            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TSize>, AxpyVectorizedAlpakaKernel>(
+                n,
+                2u,
+                alpha,
+                X,
+                Y);
+    }
+    //-----------------------------------------------------------------------------
+    //
+    //-----------------------------------------------------------------------------
+    TReturn vecadd_axpy_par_vec4_alpaka_gpu_cuda(
+        TSize const n,
+        TElem const alpha,
+        TElem const * const X,
+        TElem * const Y)
+    {
+        return
+            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TSize>, AxpyVectorizedAlpakaKernel>(
+                n,
+                4u,
+                alpha,
+                X,
+                Y);
+    }
+    //-----------------------------------------------------------------------------
+    //
+    //-----------------------------------------------------------------------------
+    TReturn vecadd_axpy_par_vec8_alpaka_gpu_cuda(
+        TSize const n,
+        TElem const alpha,
+        TElem const * const X,
+        TElem * const Y)
+    {
+        return
+            vecadd_axpy_par_alpaka<alpaka::acc::AccGpuCudaRt<alpaka::dim::DimInt<1u>, TSize>, AxpyVectorizedAlpakaKernel>(
+                n,
+                8u,
                 alpha,
                 X,
                 Y);

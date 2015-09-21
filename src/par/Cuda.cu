@@ -68,34 +68,34 @@
                 &cudaDevProp,
                 0));
 
-            TSize gridThreadExtents[] = {n};
-            TSize blockThreadExtents[] = {cudaDevProp.maxThreadsDim[0]};
+            TSize gridThreadExtent[] = {n};
+            TSize blockThreadExtent[] = {cudaDevProp.maxThreadsDim[0]};
 
-            // Restrict the max block thread extents with the grid thread extents.
-            // This removes dimensions not required in the given grid thread extents.
+            // Restrict the max block thread extent with the grid thread extent.
+            // This removes dimensions not required in the given grid thread extent.
             // This has to be done before the maxThreadsPerBlock clipping to get the maximum correctly.
             for(TSize i(0); i<1; ++i)
             {
-                blockThreadExtents[i] = std::min(blockThreadExtents[i], gridThreadExtents[i]);
+                blockThreadExtent[i] = std::min(blockThreadExtent[i], gridThreadExtent[i]);
             }
 
             // Restrict it to its minimum component.
             // For example (512, 256) will get (256, 256).
-            auto minBlockThreadExtent(blockThreadExtents[0]);
+            auto minBlockThreadExtent(blockThreadExtent[0]);
             for(TSize i(1); i<1; ++i)
             {
-                minBlockThreadExtent = std::min(minBlockThreadExtent, blockThreadExtents[i]);
+                minBlockThreadExtent = std::min(minBlockThreadExtent, blockThreadExtent[i]);
             }
             for(TSize i(0); i<1; ++i)
             {
-                blockThreadExtents[i] = minBlockThreadExtent;
+                blockThreadExtent[i] = minBlockThreadExtent;
             }
 
-            // Adjust blockThreadExtents if its product is too large.
-            if ((blockThreadExtents[0]) > cudaDevProp.maxThreadsPerBlock)
+            // Adjust blockThreadExtent if its product is too large.
+            if ((blockThreadExtent[0]) > cudaDevProp.maxThreadsPerBlock)
             {
                 // Satisfy the following equation:
-                // udaDevProp.maxThreadsPerBlock >= blockThreadExtents[0]*blockThreadExtents[1]
+                // udaDevProp.maxThreadsPerBlock >= blockThreadExtent[0]*blockThreadExtent[1]
                 // For example 1024 >= 512 * 512
 
                 // For equal block thread extent this is easily the nth root of cudaDevProp.maxThreadsPerBlock.
@@ -103,22 +103,22 @@
                 auto const nthRoot(static_cast<TSize>(fNthRoot));
                 for(TSize i(0); i<1; ++i)
                 {
-                    blockThreadExtents[i] = nthRoot;
+                    blockThreadExtent[i] = nthRoot;
                 }
             }
 
-            // Set the grid block extents (rounded to the next integer not less then the quotient.
-            TSize gridBlockExtents[] = {1};
+            // Set the grid block extent (rounded to the next integer not less then the quotient.
+            TSize gridBlockExtent[] = {1};
             for(TSize i(0); i<1; ++i)
             {
-                gridBlockExtents[i] =
+                gridBlockExtent[i] =
                     static_cast<TSize>(
-                        std::ceil(static_cast<double>(gridThreadExtents[i])
-                            / static_cast<double>(blockThreadExtents[i])));
+                        std::ceil(static_cast<double>(gridThreadExtent[i])
+                            / static_cast<double>(blockThreadExtent[i])));
             }
 
-            dim3 const dimBlock(blockThreadExtents[0]);
-            dim3 const dimGrid(gridBlockExtents[0]);
+            dim3 const dimBlock(blockThreadExtent[0]);
+            dim3 const dimGrid(gridBlockExtent[0]);
 
             VECADD_TIME_START;
 

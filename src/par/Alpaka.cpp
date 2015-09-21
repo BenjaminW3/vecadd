@@ -38,6 +38,24 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuSerial<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
+                    alpha,
+                    X,
+                    Y);
+        }
+        //-----------------------------------------------------------------------------
+        //
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_seq_vec_alpaka_cpu_b_seq_t_seq(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y)
+        {
+            return
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuSerial<alpaka::dim::DimInt<1u>, TSize>, AxpyVectorizedAlpakaKernel>(
+                    n,
+                    n,
                     alpha,
                     X,
                     Y);
@@ -56,6 +74,24 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Blocks<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
+                    alpha,
+                    X,
+                    Y);
+        }
+        //-----------------------------------------------------------------------------
+        //
+        //-----------------------------------------------------------------------------
+        TReturn vecadd_axpy_par_vec_alpaka_cpu_b_omp2_t_seq(
+            TSize const n,
+            TElem const alpha,
+            TElem const * const X,
+            TElem * const Y)
+        {
+            return
+                vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Blocks<alpaka::dim::DimInt<1u>, TSize>, AxpyVectorizedAlpakaKernel>(
+                    n,
+                    n / alpaka::omp::getMaxOmpThreads(),
                     alpha,
                     X,
                     Y);
@@ -74,6 +110,7 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp2Threads<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
                     alpha,
                     X,
                     Y);
@@ -92,6 +129,7 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuOmp4<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
                     alpha,
                     X,
                     Y);
@@ -110,6 +148,7 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuThreads<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
                     alpha,
                     X,
                     Y);
@@ -128,6 +167,7 @@
             return
                 vecadd_axpy_par_alpaka<alpaka::acc::AccCpuFibers<alpaka::dim::DimInt<1u>, TSize>, AxpyAlpakaKernel>(
                     n,
+                    1u,
                     alpha,
                     X,
                     Y);
